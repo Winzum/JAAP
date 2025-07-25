@@ -1,0 +1,30 @@
+[gd_scene load_steps=3 format=3 uid="uid://cdqt5vtbm14hl"]
+
+[ext_resource type="Script" uid="uid://rtyh2iul8kqr" path="res://screens/close_window.gd" id="1_3d4cg"]
+[ext_resource type="Texture2D" uid="uid://bouo6bmxb7kjk" path="res://src/textures/ui/jaap.jpg" id="2_7b6py"]
+
+[node name="UiInfo" type="Node2D"]
+
+[node name="Window" type="Window" parent="."]
+auto_translate_mode = 1
+title = "Jaap Info"
+initial_position = 1
+size = Vector2i(500, 500)
+script = ExtResource("1_3d4cg")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Window"]
+offset_top = 9.0
+offset_right = 500.0
+offset_bottom = 559.0
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Window/VBoxContainer"]
+layout_mode = 2
+text = "Junctional Adventure Authoring Platform - a backcronym to explain how to publish JAEPs (Junctional Adventure ePubs) "
+fit_content = true
+
+[node name="TextureRect" type="TextureRect" parent="Window/VBoxContainer"]
+layout_mode = 2
+texture = ExtResource("2_7b6py")
+expand_mode = 4
+
+[connection signal="close_requested" from="Window" to="Window" method="_on_close_requested"]

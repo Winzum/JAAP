@@ -1,0 +1,47 @@
+[gd_scene load_steps=4 format=3 uid="uid://dd6eq5gw4thbj"]
+
+[ext_resource type="Script" uid="uid://7cm4csxmbj8v" path="res://main.gd" id="1_r0du0"]
+[ext_resource type="Script" uid="uid://b17h1dr7qftf6" path="res://add_text.gd" id="1_uu6xs"]
+[ext_resource type="Script" uid="uid://bllc2olligmkv" path="res://info.gd" id="2_uu6xs"]
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource("1_r0du0")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="AddText" type="Button" parent="VBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "Add Text"
+script = ExtResource("1_uu6xs")
+
+[node name="Info" type="Button" parent="VBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "Info"
+script = ExtResource("2_uu6xs")
+
+[node name="GraphEdit" type="GraphEdit" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+show_menu = false
+
+[connection signal="pressed" from="VBoxContainer/HBoxContainer/AddText" to="VBoxContainer/HBoxContainer/AddText" method="_on_pressed"]
+[connection signal="pressed" from="VBoxContainer/HBoxContainer/Info" to="VBoxContainer/HBoxContainer/Info" method="_on_pressed"]
+[connection signal="connection_request" from="VBoxContainer/GraphEdit" to="." method="_on_graph_edit_connection_request"]

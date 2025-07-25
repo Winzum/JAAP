@@ -1,0 +1,53 @@
+[gd_scene load_steps=2 format=3 uid="uid://bcrqna8idb3m7"]
+
+[ext_resource type="Script" uid="uid://dg2r45pbg6kaa" path="res://screens/text_graph_node.gd" id="1_8wssi"]
+
+[node name="TextGraphNode" type="GraphNode"]
+offset_right = 300.0
+offset_bottom = 200.0
+resizable = true
+slot/0/left_enabled = false
+slot/0/left_type = 0
+slot/0/left_color = Color(1, 1, 1, 1)
+slot/0/left_icon = null
+slot/0/right_enabled = false
+slot/0/right_type = 0
+slot/0/right_color = Color(1, 1, 1, 1)
+slot/0/right_icon = null
+slot/0/draw_stylebox = true
+slot/1/left_enabled = false
+slot/1/left_type = 0
+slot/1/left_color = Color(1, 1, 1, 1)
+slot/1/left_icon = null
+slot/1/right_enabled = false
+slot/1/right_type = 0
+slot/1/right_color = Color(1, 1, 1, 1)
+slot/1/right_icon = null
+slot/1/draw_stylebox = true
+script = ExtResource("1_8wssi")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 2
+alignment = 2
+
+[node name="ConnectionAdd" type="Button" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "+"
+
+[node name="ConnectionRemove" type="Button" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "-"
+
+[node name="CloseButton" type="Button" parent="HBoxContainer"]
+layout_mode = 2
+text = "close"
+
+[node name="TextEdit" type="TextEdit" parent="."]
+layout_mode = 2
+size_flags_vertical = 3
+
+[connection signal="pressed" from="HBoxContainer/ConnectionAdd" to="." method="_add_node_slots" binds= [1]]
+[connection signal="pressed" from="HBoxContainer/ConnectionRemove" to="." method="_add_node_slots" binds= [-1]]
+[connection signal="pressed" from="HBoxContainer/CloseButton" to="." method="_on_close_button_pressed"]
