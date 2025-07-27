@@ -3,8 +3,8 @@
 [ext_resource type="Script" uid="uid://dg2r45pbg6kaa" path="res://screens/text_graph_node.gd" id="1_8wssi"]
 
 [node name="TextGraphNode" type="GraphNode"]
-offset_right = 300.0
-offset_bottom = 200.0
+offset_right = 400.0
+offset_bottom = 300.0
 resizable = true
 slot/0/left_enabled = false
 slot/0/left_type = 0
@@ -25,6 +25,21 @@ slot/1/right_color = Color(1, 1, 1, 1)
 slot/1/right_icon = null
 slot/1/draw_stylebox = true
 script = ExtResource("1_8wssi")
+
+[node name="PopupMenu" type="PopupMenu" parent="."]
+item_count = 1
+item_0/text = "Rename"
+item_0/id = 0
+
+[node name="PopupRename" type="PopupPanel" parent="."]
+size = Vector2i(200, 40)
+
+[node name="LineEdit" type="LineEdit" parent="PopupRename"]
+offset_left = 4.0
+offset_top = 4.0
+offset_right = 196.0
+offset_bottom = 36.0
+placeholder_text = "name"
 
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
 layout_mode = 2
@@ -48,6 +63,9 @@ text = "close"
 layout_mode = 2
 size_flags_vertical = 3
 
+[connection signal="gui_input" from="." to="." method="_on_gui_input"]
+[connection signal="index_pressed" from="PopupMenu" to="." method="_on_popup_menu_index_pressed"]
+[connection signal="text_submitted" from="PopupRename/LineEdit" to="." method="_on_rename_text_submitted"]
 [connection signal="pressed" from="HBoxContainer/ConnectionAdd" to="." method="_add_node_slots" binds= [1]]
 [connection signal="pressed" from="HBoxContainer/ConnectionRemove" to="." method="_add_node_slots" binds= [-1]]
 [connection signal="pressed" from="HBoxContainer/CloseButton" to="." method="_on_close_button_pressed"]
