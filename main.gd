@@ -19,8 +19,8 @@ func _on_graph_edit_connection_request(from_node: StringName, from_port: int, to
 
 func _on_export_pressed() -> void:
 	for conn in graph_edit.connections:
-		var from_node = conn["from_node"]
-		print(from_node)
-		var to_node = conn["to_node"]
-		print(to_node)
+		var from_node = graph_edit.get_node(NodePath(conn["from_node"]))
+		var to_node = graph_edit.get_node(NodePath(conn["to_node"]))
+		print(from_node.get_node("TextEdit_%d" % (conn["from_port"])).text)
+		print(to_node.get_node("TextEdit_%d" % (conn["to_port"])).text)
 		
