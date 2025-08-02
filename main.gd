@@ -5,8 +5,8 @@ extends Control
 @onready var graph_edit = $VBoxContainer/GraphEdit
 
 func _on_add_text_pressed() -> void:
-	var node = text_node.instantiate()
-	graph_edit.add_child(node)
+	var new_node = text_node.instantiate()
+	graph_edit.add_child(new_node)
 
 func _on_info_pressed() -> void:
 	var JaapInfo = JaapInfoScene.instantiate()
@@ -15,7 +15,11 @@ func _on_info_pressed() -> void:
 	JaapInfo.show()
 
 func _on_graph_edit_connection_request(from_node: StringName, from_port: int, to_node: StringName, to_port: int) -> void:
-	graph_edit.connect_node(from_node, from_port, to_node, to_port)
+	if from_node != to_node:
+		graph_edit.connect_node(from_node, from_port, to_node, to_port)
+
+func _on_graph_edit_disconnection_request(from_node: StringName, from_port: int, to_node: StringName, to_port: int) -> void:
+	graph_edit.disconnect_node(from_node, from_port, to_node, to_port)
 
 func _on_export_pressed() -> void:
 	var source_node = get_origin_node(graph_edit.connections)

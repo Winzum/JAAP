@@ -40,9 +40,12 @@ text = "Info"
 [node name="GraphEdit" type="GraphEdit" parent="VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
+grid_pattern = 1
+right_disconnects = true
 show_menu = false
 
 [connection signal="pressed" from="VBoxContainer/HBoxContainer/AddText" to="." method="_on_add_text_pressed"]
 [connection signal="pressed" from="VBoxContainer/HBoxContainer/Export" to="." method="_on_export_pressed"]
 [connection signal="pressed" from="VBoxContainer/HBoxContainer/Info" to="." method="_on_info_pressed"]
 [connection signal="connection_request" from="VBoxContainer/GraphEdit" to="." method="_on_graph_edit_connection_request"]
+[connection signal="disconnection_request" from="VBoxContainer/GraphEdit" to="." method="_on_graph_edit_disconnection_request"]

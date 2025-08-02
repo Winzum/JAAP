@@ -1,5 +1,4 @@
 extends GraphNode
-
 @onready var graph_edit = get_parent()
 
 func _ready() -> void:
@@ -43,5 +42,4 @@ func _on_popup_menu_index_pressed(index: int) -> void:
 
 func _on_rename_text_submitted(new_text: String) -> void:
 	title = new_text
-	name = new_text
 	$PopupRename.hide()
