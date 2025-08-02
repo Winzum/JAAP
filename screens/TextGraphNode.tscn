@@ -62,6 +62,7 @@ text = "close"
 [node name="TextEdit_0" type="TextEdit" parent="."]
 layout_mode = 2
 size_flags_vertical = 3
+wrap_mode = 1
 
 [connection signal="gui_input" from="." to="." method="_on_gui_input"]
 [connection signal="index_pressed" from="PopupMenu" to="." method="_on_popup_menu_index_pressed"]

@@ -20,7 +20,6 @@ func _add_node_slots(n: int) -> void:
 		for i in range(n):
 			var text_edit_new = TextEdit.new()
 			text_edit_new.custom_minimum_size = Vector2(0,40)
-			print("TextEdit_%d" % (output_count + i))
 			text_edit_new.name = "TextEdit_%d" % (output_count  + i)
 			set_slot(output_count + 1 + i, false, 1, Color.RED, true, 1, Color.BLUE)
 			add_child(text_edit_new)		
