@@ -6,6 +6,8 @@ extends Control
 
 func _on_add_text_pressed() -> void:
 	var new_node = text_node.instantiate()
+	var zoom = graph_edit.zoom
+	new_node.position_offset = (graph_edit.scroll_offset / zoom + get_size() / (2 * zoom)) - new_node.size / 2
 	graph_edit.add_child(new_node)
 
 func _on_info_pressed() -> void:
