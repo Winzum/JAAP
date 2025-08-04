@@ -1,14 +1,18 @@
 extends Control
 
-@onready var text_node = preload("res://screens/TextGraphNode.tscn")
 @onready var JaapInfoScene = preload("res://screens/InfoScreen.tscn")
 @onready var graph_edit = $VBoxContainer/GraphEdit
 
 func _on_add_text_pressed() -> void:
-	var new_node = text_node.instantiate()
-	var zoom = graph_edit.zoom
-	new_node.position_offset = (graph_edit.scroll_offset / zoom + get_size() / (2 * zoom)) - new_node.size / 2
-	graph_edit.add_child(new_node)
+	graph_edit.add_graph_node()
+
+func _on_save_pressed() -> void:
+	var data = graph_edit.get_graph_data()
+	save_file(data)
+
+func _on_load_pressed() -> void:
+	var data = load_file("user://saved_data.json")
+	graph_edit.set_graph_data(data)
 
 func _on_info_pressed() -> void:
 	var JaapInfo = JaapInfoScene.instantiate()
@@ -16,21 +20,15 @@ func _on_info_pressed() -> void:
 	get_tree().root.add_child(JaapInfo)
 	JaapInfo.show()
 
-func _on_graph_edit_connection_request(from_node: StringName, from_port: int, to_node: StringName, to_port: int) -> void:
-	if from_node != to_node:
-		graph_edit.connect_node(from_node, from_port, to_node, to_port)
-
-func _on_graph_edit_disconnection_request(from_node: StringName, from_port: int, to_node: StringName, to_port: int) -> void:
-	graph_edit.disconnect_node(from_node, from_port, to_node, to_port)
-
 func _on_export_pressed() -> void:
 	var source_node = get_origin_node(graph_edit.connections)
-	var connections = format_connections(graph_edit.connections)
-	if source_node == "" or connections.size() == 0:
-		return
+	var connections = graph_edit.get_formatted_connections(graph_edit.connections)
+	if not (source_node == "" or connections.size() == 0):
+		var texts_list = extract_node_connection_text(source_node, connections)
+		export_to_user_folder(texts_list)
 
-	var texts_list = extract_node_connection_text(source_node, connections)
-	export_to_user_folder(texts_list)
+func _on_reset_pressed() -> void:
+	graph_edit.reset_graph_data()
 
 func get_origin_node(connections: Array) -> String:
 	var from_nodes = {}
@@ -47,17 +45,6 @@ func get_origin_node(connections: Array) -> String:
 			return source_node
 	#TODO what if no connections found?
 	return source_node
-
-func format_connections(connections: Array) -> Dictionary:
-	var formatted_connections = {}
-	#add all from nodes before adding the connection points
-	for connection in connections:
-		formatted_connections[connection.from_node] = {}
-		
-	for connection in connections:
-		formatted_connections[connection.from_node][connection.from_port] = connection.to_node
-		
-	return formatted_connections
 
 #recurively extract the texts of all nodes
 func extract_node_connection_text(node_name: String, connections: Dictionary) -> Array:
@@ -80,3 +67,16 @@ func export_to_user_folder(texts_list: Array) -> void:
 			file.store_line(text)
 		file.close()
 	print("file exported to ", file_path)
+
+#TODO refactor so both export and save function use a filebrowser
+func save_file(data: Dictionary) -> void:
+	var file_path = "user://saved_data.json"
+	var file = FileAccess.open(file_path, FileAccess.WRITE)
+	file.store_string(JSON.stringify(data, "\t"))
+	file.close()
+	return
+
+func load_file(file_path: String) -> Dictionary:
+	var file = FileAccess.open(file_path, FileAccess.READ)
+	var data = JSON.parse_string(file.get_as_text())
+	return data
