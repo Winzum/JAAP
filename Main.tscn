@@ -38,9 +38,13 @@ text = "Save"
 layout_mode = 2
 text = "Load"
 
-[node name="Export" type="Button" parent="VBoxContainer/HBoxContainer"]
+[node name="ExportTXT" type="Button" parent="VBoxContainer/HBoxContainer"]
 layout_mode = 2
-text = "Export"
+text = "Export to .txt"
+
+[node name="ExportEPUB" type="Button" parent="VBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "Export to .epub"
 
 [node name="Reset" type="Button" parent="VBoxContainer/HBoxContainer"]
 layout_mode = 2
@@ -61,7 +65,8 @@ script = ExtResource("2_uu6xs")
 [connection signal="pressed" from="VBoxContainer/HBoxContainer/AddText" to="." method="_on_add_text_pressed"]
 [connection signal="pressed" from="VBoxContainer/HBoxContainer/Save" to="." method="_on_save_pressed"]
 [connection signal="pressed" from="VBoxContainer/HBoxContainer/Load" to="." method="_on_load_pressed"]
-[connection signal="pressed" from="VBoxContainer/HBoxContainer/Export" to="." method="_on_export_pressed"]
+[connection signal="pressed" from="VBoxContainer/HBoxContainer/ExportTXT" to="." method="_on_export_txt_pressed"]
+[connection signal="pressed" from="VBoxContainer/HBoxContainer/ExportEPUB" to="." method="_on_export_epub_pressed"]
 [connection signal="pressed" from="VBoxContainer/HBoxContainer/Reset" to="." method="_on_reset_pressed"]
 [connection signal="pressed" from="VBoxContainer/HBoxContainer/Info" to="." method="_on_info_pressed"]
 [connection signal="connection_request" from="VBoxContainer/GraphEdit" to="VBoxContainer/GraphEdit" method="_on_connection_request"]

@@ -3,6 +3,10 @@ extends Control
 @onready var JaapInfoScene = preload("res://screens/InfoScreen.tscn")
 @onready var graph_edit = $VBoxContainer/GraphEdit
 
+# C#-stuff
+var EpubExportScript = load("res://EpubExport.cs")
+var EpubExport = EpubExportScript.new()
+
 func _on_add_text_pressed() -> void:
 	graph_edit.add_graph_node()
 
@@ -20,12 +24,17 @@ func _on_info_pressed() -> void:
 	get_tree().root.add_child(JaapInfo)
 	JaapInfo.show()
 
-func _on_export_pressed() -> void:
+func _on_export_txt_pressed() -> void:
 	var source_node = get_origin_node(graph_edit.connections)
 	var connections = graph_edit.get_formatted_connections(graph_edit.connections)
 	if not (source_node == "" or connections.size() == 0):
 		var texts_list = extract_node_connection_text(source_node, connections)
 		export_to_user_folder(texts_list)
+
+
+func _on_export_epub_pressed() -> void:
+	EpubExport.PrintNTimes("testexport", 1)
+	EpubExport.WriteBook()
 
 func _on_reset_pressed() -> void:
 	graph_edit.reset_graph_data()

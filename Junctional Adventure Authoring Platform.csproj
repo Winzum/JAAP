@@ -1,0 +1,10 @@
+<Project Sdk="Godot.NET.Sdk/4.4.1">
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <EnableDynamicLoading>true</EnableDynamicLoading>
+    <RootNamespace>JunctionalAdventureAuthoringPlatform</RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="QuickEPUB" Version="1.2.0" />
+  </ItemGroup>
+</Project>
