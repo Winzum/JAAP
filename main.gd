@@ -4,8 +4,7 @@ extends Control
 @onready var graph_edit = $VBoxContainer/GraphEdit
 
 # C#-stuff
-var EpubExportScript = load("res://EpubExport.cs")
-var EpubExport = EpubExportScript.new()
+var EpubNode = load("res://EpubNode.cs")
 
 func _on_add_text_pressed() -> void:
 	graph_edit.add_graph_node()
@@ -31,10 +30,15 @@ func _on_export_txt_pressed() -> void:
 		var texts_list = extract_node_connection_text(source_node, connections)
 		export_to_user_folder(texts_list)
 
-
 func _on_export_epub_pressed() -> void:
-	EpubExport.PrintNTimes("testexport", 1)
-	EpubExport.WriteBook()
+	var epub_node = EpubNode.new("Sample", "Lennart")
+	var source_node = get_origin_node(graph_edit.connections)
+	var connections = graph_edit.get_formatted_connections(graph_edit.connections)
+	if not (source_node == "" or connections.size() == 0):
+		var texts_list = extract_node_connection_text(source_node, connections)
+		for i in range(texts_list.size()):
+			epub_node.AddSection(i+1, texts_list[i])
+		epub_node.ExportEpub("sample.epub")
 
 func _on_reset_pressed() -> void:
 	graph_edit.reset_graph_data()

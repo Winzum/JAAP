@@ -1,9 +1,10 @@
-[gd_scene load_steps=3 format=3 uid="uid://dd6eq5gw4thbj"]
+[gd_scene load_steps=4 format=3 uid="uid://dd6eq5gw4thbj"]
 
 [ext_resource type="Script" uid="uid://7cm4csxmbj8v" path="res://main.gd" id="1_r0du0"]
+[ext_resource type="Script" uid="uid://34twwgyqqvv6" path="res://popup_menu.gd" id="2_r0du0"]
 [ext_resource type="Script" uid="uid://dkis5kpbvpcl4" path="res://graph_edit.gd" id="2_uu6xs"]
 
-[node name="Control" type="Control"]
+[node name="Main" type="Control"]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -13,6 +14,12 @@ grow_vertical = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 script = ExtResource("1_r0du0")
+
+[node name="PopupMenu" type="PopupMenu" parent="."]
+item_count = 1
+item_0/text = "Add Text"
+item_0/id = 0
+script = ExtResource("2_r0du0")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 layout_mode = 1
@@ -62,6 +69,7 @@ right_disconnects = true
 show_menu = false
 script = ExtResource("2_uu6xs")
 
+[connection signal="index_pressed" from="PopupMenu" to="PopupMenu" method="_on_index_pressed"]
 [connection signal="pressed" from="VBoxContainer/HBoxContainer/AddText" to="." method="_on_add_text_pressed"]
 [connection signal="pressed" from="VBoxContainer/HBoxContainer/Save" to="." method="_on_save_pressed"]
 [connection signal="pressed" from="VBoxContainer/HBoxContainer/Load" to="." method="_on_load_pressed"]
@@ -71,3 +79,4 @@ script = ExtResource("2_uu6xs")
 [connection signal="pressed" from="VBoxContainer/HBoxContainer/Info" to="." method="_on_info_pressed"]
 [connection signal="connection_request" from="VBoxContainer/GraphEdit" to="VBoxContainer/GraphEdit" method="_on_connection_request"]
 [connection signal="disconnection_request" from="VBoxContainer/GraphEdit" to="VBoxContainer/GraphEdit" method="_on_disconnection_request"]
+[connection signal="gui_input" from="VBoxContainer/GraphEdit" to="PopupMenu" method="_on_graph_edit_gui_input"]

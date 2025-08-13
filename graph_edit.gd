@@ -10,19 +10,34 @@ func _on_disconnection_request(from_node: StringName, from_port: int, to_node: S
 
 func add_graph_node(data: Dictionary = {}):
 	var new_node = text_node.instantiate()
-	if not data.is_empty():
+
+	if "name" in data:
 		new_node.name = data["name"]
+	
+	if "title" in data:
 		new_node.title = data["title"]
-		new_node.position_offset = str_to_var("Vector2" + data["position"])
+	
+	if "position" in data:
+		var pos = data["position"]
+		if typeof(pos) == TYPE_VECTOR2:
+			new_node.position_offset = pos
+		else:
+			new_node.position_offset = str_to_var("Vector2" + pos)
+	else:
+		new_node.position_offset = (scroll_offset / zoom + get_size() / (2 * zoom)) - new_node.size / 2
+	
+	if "size" in data:
 		new_node.size = str_to_var("Vector2" + data["size"])
+		
+	if "textedits" in data:
 		var text_edits = data["textedits"]
-		new_node.initialize(text_edits["0"])
+		new_node.initialize_slot(text_edits["0"])
 		for key in text_edits:
 			if key != "0":
 				new_node.add_known_field(int(key), "TextEdit_" + key, text_edits[key])
 	else:
-		new_node.initialize()
-		new_node.position_offset = (scroll_offset / zoom + get_size() / (2 * zoom)) - new_node.size / 2
+		new_node.initialize_slot()
+	
 	add_child(new_node)
 
 #gets connections in a formatted format

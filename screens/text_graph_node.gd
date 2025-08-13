@@ -1,7 +1,7 @@
 extends GraphNode
 @onready var graph_edit = get_parent()
 
-func initialize(start_text:String = "") -> void:
+func initialize_slot(start_text:String = "") -> void:
 	$TextEdit_0.text = start_text
 	set_slot(1, true, 1, Color.RED, true, 1, Color.BLUE)
 
