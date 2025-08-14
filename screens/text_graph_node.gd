@@ -38,6 +38,7 @@ func _on_gui_input(event: InputEvent) -> void:
 		$PopupMenu.position = popup_location
 		$PopupRename.position = popup_location
 		$PopupMenu.show()
+		accept_event()
 
 func _on_popup_menu_index_pressed(index: int) -> void:
 	match index:

@@ -16,6 +16,8 @@ size_flags_vertical = 3
 script = ExtResource("1_r0du0")
 
 [node name="PopupMenu" type="PopupMenu" parent="."]
+handle_input_locally = false
+mouse_passthrough = true
 item_count = 1
 item_0/text = "Add Text"
 item_0/id = 0
