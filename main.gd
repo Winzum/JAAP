@@ -30,15 +30,51 @@ func _on_export_txt_pressed() -> void:
 		var texts_list = extract_node_connection_text(source_node, connections)
 		export_to_user_folder(texts_list)
 
+#formatting and ordering Epub pages with BFS
 func _on_export_epub_pressed() -> void:
-	var epub_node = EpubNode.new("Sample", "Lennart")
-	var source_node = get_origin_node(graph_edit.connections)
+	var graph_nodes = graph_edit.get_children().filter(func(node): return node is GraphNode)
 	var connections = graph_edit.get_formatted_connections(graph_edit.connections)
-	if not (source_node == "" or connections.size() == 0):
-		var texts_list = extract_node_connection_text(source_node, connections)
-		for i in range(texts_list.size()):
-			epub_node.AddSection(i+1, texts_list[i])
-		epub_node.ExportEpub("sample.epub")
+	print(connections)
+	var origin_node = get_origin_node(graph_edit.connections)
+	if not (origin_node == "" or connections.size() == 0):
+		var epub_node = EpubNode.new("Sample", "Lennart")
+		var visited = {}
+		var section_map = {}
+		var section_counter = 1
+		
+		var queue = []
+		queue.append(origin_node)
+		while queue.size() > 0:
+			var current_node_name = queue.pop_front()
+			if current_node_name in visited:
+				continue
+			visited[current_node_name] = true
+			
+			if not section_map.has(current_node_name):
+				section_map[current_node_name] = section_counter
+				section_counter += 1
+			
+			#retrieve actual node from graph_nodes based on name
+			var current_node = graph_nodes.filter(func(node): return node.name == current_node_name)[0]
+			var section_title = current_node.name
+			var section_content = "<p>" + current_node.get_node("TextEdit_0").text + "</p>"
+
+			var links = []
+			if current_node_name in connections:
+				for port in connections[current_node_name]:
+					var dest_name = connections[current_node_name][port]
+					if not section_map.has(dest_name):
+						section_map[dest_name] = section_counter
+						section_counter += 1
+					if not dest_name in visited:
+						queue.append(dest_name)
+					if port != 0:
+						var anchor_text = current_node.get_node("TextEdit_" + str(port)).text
+						links.append('<a href="section'+ str(section_map[dest_name]) +'.html">' + anchor_text + '</a>')
+
+			section_content += "\n" + "\n".join(links)
+			epub_node.AddSection(section_title, section_content)
+		epub_node.ExportEpub("Sample.epub")
 
 func _on_reset_pressed() -> void:
 	graph_edit.reset_graph_data()
