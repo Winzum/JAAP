@@ -17,6 +17,7 @@ func add_known_field(field_port: int, field_name: String, field_text: String) ->
 # adds or removes text slots to the node. Adds if true, removes if false
 func _add_node_slots(add: bool) -> void:
 	var output_count = get_output_port_count()
+	print(output_count)
 	if add:
 		var text_edit_new = TextEdit.new()
 		text_edit_new.custom_minimum_size = Vector2(0,40)

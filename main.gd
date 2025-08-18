@@ -34,7 +34,6 @@ func _on_export_txt_pressed() -> void:
 func _on_export_epub_pressed() -> void:
 	var graph_nodes = graph_edit.get_children().filter(func(node): return node is GraphNode)
 	var connections = graph_edit.get_formatted_connections(graph_edit.connections)
-	print(connections)
 	var origin_node = get_origin_node(graph_edit.connections)
 	if not (origin_node == "" or connections.size() == 0):
 		var epub_node = EpubNode.new("Sample", "Lennart")
@@ -70,7 +69,7 @@ func _on_export_epub_pressed() -> void:
 						queue.append(dest_name)
 					if port != 0:
 						var anchor_text = current_node.get_node("TextEdit_" + str(port)).text
-						links.append('<a href="section'+ str(section_map[dest_name]) +'.html">' + anchor_text + '</a>')
+						links.append('<p><a href="section'+ str(section_map[dest_name]) +'.html">' + anchor_text + '</a></p>')
 
 			section_content += "\n" + "\n".join(links)
 			epub_node.AddSection(section_title, section_content)
