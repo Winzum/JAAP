@@ -1,5 +1,6 @@
 extends GraphEdit
-@onready var text_node = preload("res://screens/TextGraphNode.tscn")
+@onready var text_node = preload("res://nodes/TextGraphNode.tscn")
+@onready var context_node = preload("res://nodes/ContextGraphNode.tscn")
 
 func _on_connection_request(from_node: StringName, from_port: int, to_node: StringName, to_port: int) -> void:
 	if from_node != to_node:
@@ -10,6 +11,11 @@ func _on_disconnection_request(from_node: StringName, from_port: int, to_node: S
 
 func add_graph_node(data: Dictionary = {}):
 	var new_node = text_node.instantiate()
+	if "type" in data:
+		#if data["type"] == "TextGraphNode":
+			#new_node = text_node.instantiate()
+		if data["type"] == "ContextGraphNode":
+			new_node = context_node.instantiate()
 
 	if "name" in data:
 		new_node.name = data["name"]
@@ -59,8 +65,9 @@ func get_graph_data() -> Dictionary:
 		"connections": {}
 	}
 	for node in get_children():
-		if node is GraphNode:
+		if node is BaseGraphNode:
 			data["nodes"].append({
+				"type": node.get_graph_class(),
 				"name": node.name,
 				"title": node.title,
 				"position": node.position_offset,
@@ -81,6 +88,6 @@ func set_graph_data(data: Dictionary) -> void:
 #removes all child nodes and resets connections
 func reset_graph_data() -> void:
 	for node in get_children():
-		if node is GraphNode:
+		if node is BaseGraphNode:
 			node.free()
 	clear_connections()

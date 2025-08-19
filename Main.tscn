@@ -1,8 +1,8 @@
 [gd_scene load_steps=4 format=3 uid="uid://dd6eq5gw4thbj"]
 
 [ext_resource type="Script" uid="uid://7cm4csxmbj8v" path="res://main.gd" id="1_r0du0"]
-[ext_resource type="Script" uid="uid://34twwgyqqvv6" path="res://popup_menu.gd" id="2_r0du0"]
-[ext_resource type="Script" uid="uid://dkis5kpbvpcl4" path="res://graph_edit.gd" id="2_uu6xs"]
+[ext_resource type="Script" uid="uid://34twwgyqqvv6" path="res://scripts/popup_menu.gd" id="2_r0du0"]
+[ext_resource type="Script" uid="uid://dkis5kpbvpcl4" path="res://scripts/graph_edit.gd" id="2_uu6xs"]
 
 [node name="Main" type="Control"]
 layout_mode = 3
@@ -18,9 +18,11 @@ script = ExtResource("1_r0du0")
 [node name="PopupMenu" type="PopupMenu" parent="."]
 handle_input_locally = false
 mouse_passthrough = true
-item_count = 1
+item_count = 2
 item_0/text = "Add Text"
 item_0/id = 0
+item_1/text = "Add Context"
+item_1/id = 1
 script = ExtResource("2_r0du0")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]

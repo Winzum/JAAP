@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://bcn87c8uu5fhh"]
 
-[ext_resource type="Script" uid="uid://rtyh2iul8kqr" path="res://screens/close_window.gd" id="1_rdqhh"]
+[ext_resource type="Script" uid="uid://rtyh2iul8kqr" path="res://scripts/close_window.gd" id="1_rdqhh"]
 
 [node name="TextWindow" type="Window"]
 position = Vector2i(0, 36)

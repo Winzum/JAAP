@@ -4,7 +4,7 @@ extends Control
 @onready var graph_edit = $VBoxContainer/GraphEdit
 
 # C#-stuff
-var EpubNode = load("res://EpubNode.cs")
+var EpubNode = load("res://cs/EpubNode.cs")
 
 func _on_add_text_pressed() -> void:
 	graph_edit.add_graph_node()

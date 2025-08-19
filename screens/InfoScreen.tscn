@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://cdqt5vtbm14hl"]
 
-[ext_resource type="Script" uid="uid://rtyh2iul8kqr" path="res://screens/close_window.gd" id="1_3d4cg"]
+[ext_resource type="Script" uid="uid://rtyh2iul8kqr" path="res://scripts/close_window.gd" id="1_3d4cg"]
 [ext_resource type="Texture2D" uid="uid://bouo6bmxb7kjk" path="res://src/textures/ui/jaap.jpg" id="2_7b6py"]
 
 [node name="UiInfo" type="Node2D"]

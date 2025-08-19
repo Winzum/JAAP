@@ -1,0 +1,49 @@
+[gd_scene load_steps=3 format=3 uid="uid://cm36mr80kjrfk"]
+
+[ext_resource type="Script" uid="uid://c3wh38tja47y8" path="res://scripts/context_graph_node.gd" id="1_q5np2"]
+[ext_resource type="PackedScene" uid="uid://bnfa3c6dm1fre" path="res://nodes/PopupContainer.tscn" id="2_q5np2"]
+
+[node name="ContextGraphNode" type="GraphNode" node_paths=PackedStringArray("popup_container", "close_button")]
+offset_right = 300.0
+offset_bottom = 200.0
+resizable = true
+slot/0/left_enabled = false
+slot/0/left_type = 0
+slot/0/left_color = Color(1, 1, 1, 1)
+slot/0/left_icon = null
+slot/0/right_enabled = false
+slot/0/right_type = 0
+slot/0/right_color = Color(1, 1, 1, 1)
+slot/0/right_icon = null
+slot/0/draw_stylebox = true
+slot/1/left_enabled = false
+slot/1/left_type = 0
+slot/1/left_color = Color(1, 1, 1, 1)
+slot/1/left_icon = null
+slot/1/right_enabled = false
+slot/1/right_type = 0
+slot/1/right_color = Color(1, 1, 1, 1)
+slot/1/right_icon = null
+slot/1/draw_stylebox = true
+script = ExtResource("1_q5np2")
+popup_container = NodePath("PopupContainer")
+close_button = NodePath("HBoxContainer/CloseButton")
+graph_class_name = "ContextGraphNode"
+metadata/_custom_type_script = "uid://c0tt7qeudxgun"
+
+[node name="PopupContainer" parent="." instance=ExtResource("2_q5np2")]
+visible = false
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 2
+alignment = 2
+
+[node name="CloseButton" type="Button" parent="HBoxContainer"]
+layout_mode = 2
+text = "close"
+
+[node name="TextEdit_0" type="TextEdit" parent="."]
+layout_mode = 2
+size_flags_vertical = 3
+wrap_mode = 1
+caret_blink = true
