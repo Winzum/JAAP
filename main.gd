@@ -42,9 +42,11 @@ func _on_export_epub_pressed() -> void:
 		var section_counter = 1
 		
 		var queue = []
-		queue.append(origin_node)
+		queue.append([origin_node, null])
 		while queue.size() > 0:
-			var current_node_name = queue.pop_front()
+			var entry = queue.pop_front()
+			var current_node_name = entry[0]
+			var previous_textgraphnode_name = entry[1]
 			if current_node_name in visited:
 				continue
 			visited[current_node_name] = true
@@ -56,23 +58,43 @@ func _on_export_epub_pressed() -> void:
 			#retrieve actual node from graph_nodes based on name
 			var current_node = graph_nodes.filter(func(node): return node.name == current_node_name)[0]
 			var section_title = current_node.name
-			var section_content = "<p>" + current_node.get_node("TextEdit_0").text + "</p>"
-
+			
+			var section_content = ""
 			var links = []
-			if current_node_name in connections:
-				for port in connections[current_node_name]:
-					var dest_name = connections[current_node_name][port]
-					if not section_map.has(dest_name):
-						section_map[dest_name] = section_counter
-						section_counter += 1
-					if not dest_name in visited:
-						queue.append(dest_name)
-					if port != 0:
-						var anchor_text = current_node.get_node("TextEdit_" + str(port)).text
-						links.append('<p><a href="section'+ str(section_map[dest_name]) +'.html">' + anchor_text + '</a></p>')
+			
+			if current_node is TextGraphNode:
+				section_content = "<p>" + current_node.get_node("TextEdit_0").text + "</p>"
+				if current_node_name in connections:
+					for port in connections[current_node_name]:
+						var dest_name = connections[current_node_name][port]
+						if not section_map.has(dest_name):
+							section_map[dest_name] = section_counter
+							section_counter += 1
+						if not dest_name in visited:
+							var dest_node = graph_nodes.filter(func(node): return node.name == dest_name)[0]
+							var next_prev = current_node_name if dest_node is ContextGraphNode else null
+							queue.append([dest_name, next_prev])
+						if port != 0:
+							var anchor_text = current_node.get_node("TextEdit_" + str(port)).text
+							links.append('<p><a href="section'+ str(section_map[dest_name]) +'.html">' + anchor_text + '</a></p>')
+				section_content += "\n" + "\n".join(links)
+				epub_node.AddSection(section_title, section_content)
+			elif current_node is ContextGraphNode:
+				section_content = "<p>" + current_node.get_node("TextEdit_0").text + "</p>"
+				#Add previous TextGraphNode content if available
+				if previous_textgraphnode_name != null:
+					var prev_node = graph_nodes.filter(func(node): return node.name == previous_textgraphnode_name)[0]
+					var prev_text = "<p>" + prev_node.get_node("TextEdit_0").text + "</p>"
+					if previous_textgraphnode_name in connections:
+						for port in connections[previous_textgraphnode_name]:
+							var dest_name = connections[previous_textgraphnode_name][port]
+							if port != 0:
+								var anchor_text = prev_node.get_node("TextEdit_" + str(port)).text
+								links.append('<p><a href="section'+ str(section_map[dest_name]) +'.html">' + anchor_text + '</a></p>')
+					prev_text += "\n" + "\n".join(links)
+					section_content += "<hr>" + prev_text
+					epub_node.AddSection(section_title, section_content)
 
-			section_content += "\n" + "\n".join(links)
-			epub_node.AddSection(section_title, section_content)
 		epub_node.ExportEpub("Sample.epub")
 
 func _on_reset_pressed() -> void:

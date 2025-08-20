@@ -58,5 +58,5 @@ size_flags_vertical = 3
 wrap_mode = 1
 caret_blink = true
 
-[connection signal="pressed" from="HBoxContainer/ConnectionAdd" to="." method="_add_node_slots"]
-[connection signal="pressed" from="HBoxContainer/ConnectionRemove" to="." method="_add_node_slots"]
+[connection signal="pressed" from="HBoxContainer/ConnectionAdd" to="." method="_add_node_slots" binds= [true]]
+[connection signal="pressed" from="HBoxContainer/ConnectionRemove" to="." method="_add_node_slots" binds= [false]]
