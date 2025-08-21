@@ -14,8 +14,13 @@ func _on_save_pressed() -> void:
 	save_file(data)
 
 func _on_load_pressed() -> void:
-	var data = load_file("user://saved_data.json")
-	graph_edit.set_graph_data(data)
+	var dialog = FileDialog.new()
+	dialog.set_file_mode(FileDialog.FILE_MODE_OPEN_FILE)
+	dialog.set_access(FileDialog.ACCESS_FILESYSTEM)
+	dialog.set_use_native_dialog(true)
+	dialog.connect("file_selected", load_file)
+	add_child(dialog)
+	dialog.popup_centered_ratio()
 
 func _on_info_pressed() -> void:
 	var JaapInfo = JaapInfoScene.instantiate()
@@ -138,6 +143,8 @@ func export_to_user_folder(texts_list: Array) -> void:
 		file.close()
 	print("file exported to ", file_path)
 
+
+
 #TODO refactor so both export and save function use a filebrowser
 func save_file(data: Dictionary) -> void:
 	var file_path = "user://saved_data.json"
@@ -146,7 +153,7 @@ func save_file(data: Dictionary) -> void:
 	file.close()
 	return
 
-func load_file(file_path: String) -> Dictionary:
+func load_file(file_path: String) -> void:
 	var file = FileAccess.open(file_path, FileAccess.READ)
 	var data = JSON.parse_string(file.get_as_text())
-	return data
+	graph_edit.set_graph_data(data)
