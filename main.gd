@@ -10,17 +10,10 @@ func _on_add_text_pressed() -> void:
 	graph_edit.add_graph_node()
 
 func _on_save_pressed() -> void:
-	var data = graph_edit.get_graph_data()
-	save_file(data)
+	show_file_dialog(FileDialog.FILE_MODE_SAVE_FILE, Callable(self, 'save_file'))
 
 func _on_load_pressed() -> void:
-	var dialog = FileDialog.new()
-	dialog.set_file_mode(FileDialog.FILE_MODE_OPEN_FILE)
-	dialog.set_access(FileDialog.ACCESS_FILESYSTEM)
-	dialog.set_use_native_dialog(true)
-	dialog.connect("file_selected", load_file)
-	add_child(dialog)
-	dialog.popup_centered_ratio()
+	show_file_dialog(FileDialog.FILE_MODE_OPEN_FILE, Callable(self, 'load_file'))
 
 func _on_info_pressed() -> void:
 	var JaapInfo = JaapInfoScene.instantiate()
@@ -143,15 +136,20 @@ func export_to_user_folder(texts_list: Array) -> void:
 		file.close()
 	print("file exported to ", file_path)
 
+func show_file_dialog(mode: int, callable: Callable):
+	var dialog = FileDialog.new()
+	dialog.set_file_mode(mode)
+	dialog.set_access(FileDialog.ACCESS_FILESYSTEM)
+	dialog.set_use_native_dialog(true)
+	dialog.file_selected.connect(callable)
+	add_child(dialog)
+	dialog.popup_centered_ratio()
 
-
-#TODO refactor so both export and save function use a filebrowser
-func save_file(data: Dictionary) -> void:
-	var file_path = "user://saved_data.json"
+func save_file(file_path: String) -> void:
+	var data = graph_edit.get_graph_data()
 	var file = FileAccess.open(file_path, FileAccess.WRITE)
 	file.store_string(JSON.stringify(data, "\t"))
 	file.close()
-	return
 
 func load_file(file_path: String) -> void:
 	var file = FileAccess.open(file_path, FileAccess.READ)
