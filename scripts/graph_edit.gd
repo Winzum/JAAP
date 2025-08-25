@@ -1,6 +1,7 @@
 extends GraphEdit
 @onready var text_node = preload("res://nodes/TextGraphNode.tscn")
 @onready var context_node = preload("res://nodes/ContextGraphNode.tscn")
+@onready var highlight_text_node = preload("res://nodes/HighlightTextNode.tscn")
 
 func _on_connection_request(from_node: StringName, from_port: int, to_node: StringName, to_port: int) -> void:
 	if from_node != to_node:
@@ -16,7 +17,9 @@ func add_graph_node(data: Dictionary = {}):
 			#new_node = text_node.instantiate()
 		if data["type"] == "ContextGraphNode":
 			new_node = context_node.instantiate()
-
+		if data["type"] == "HighlightTextNode":
+			new_node = highlight_text_node.instantiate()
+	
 	if "name" in data:
 		new_node.name = data["name"]
 	

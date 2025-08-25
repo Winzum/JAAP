@@ -31,7 +31,6 @@ func _on_export_txt_pressed() -> void:
 		var texts_list = extract_node_connection_text(source_node, connections)
 		export_to_user_folder(texts_list)
 
-
 func _on_reset_pressed() -> void:
 	graph_edit.reset_graph_data()
 
