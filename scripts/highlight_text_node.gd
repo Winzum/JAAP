@@ -5,15 +5,18 @@ extends BaseGraphNode
 
 var marked_words = [] # {start: int, end: int, text: String}
 
-func initialize_slot(start_text:String = "Enter text...") -> void:
+func initialize_slot(start_text:String = "Enter text...", start_marked_words:Array = []) -> void:
 	$TextEdit_0.text = start_text
+	marked_words = start_marked_words
 	set_slot(1, true, 1, Color.MEDIUM_PURPLE, true, 1, Color.TURQUOISE)
 
 func _on_text_edit_focus_entered() -> void:
+	panel_text.text = $TextEdit_0.text
 	var viewport_size = get_viewport().get_visible_rect().size
 	panel_container.size = viewport_size * 0.8
 	panel_container.position = (viewport_size - panel_container.size) / 2
 	panel_container.show()
+	panel_text.grab_focus()
 	
 func _on_popup_panel_popup_hide() -> void:
 	$TextEdit_0.text = panel_text.text

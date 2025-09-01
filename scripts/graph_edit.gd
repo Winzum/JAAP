@@ -40,7 +40,10 @@ func add_graph_node(data: Dictionary = {}):
 		
 	if "textedits" in data:
 		var text_edits = data["textedits"]
-		new_node.initialize_slot(text_edits["0"])
+		if data["type"] == "HighlightTextNode":
+			new_node.initialize_slot(text_edits["0"], data["marked_words"])
+		else:
+			new_node.initialize_slot(text_edits["0"])
 		for key in text_edits:
 			if key != "0":
 				new_node.add_known_field(int(key), "TextEdit_" + key, text_edits[key])
@@ -75,7 +78,8 @@ func get_graph_data() -> Dictionary:
 				"title": node.title,
 				"position": node.position_offset,
 				"size": node.size,
-				"textedits": node.get_textedit_text()
+				"textedits": node.get_textedit_text(),
+				"marked_words": node.marked_words if "marked_words" in node else []
 			})
 	data["connections"] = connections
 	return data

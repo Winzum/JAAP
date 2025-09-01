@@ -81,7 +81,11 @@ func show_file_dialog(mode: int, file_type: String, callable: Callable):
 		dialog.add_filter("*.json", "JAAP save object notation")
 	if file_type == "epub":
 		dialog.add_filter("*.epub", "JAAP epub")
-	dialog.file_selected.connect(callable)
+	dialog.file_selected.connect(func(path): 
+		callable.call(path)
+		dialog.queue_free()
+	)
+	dialog.canceled.connect(func(): dialog.queue_free())
 	add_child(dialog)
 	dialog.popup_centered_ratio()
 
