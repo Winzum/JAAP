@@ -1,10 +1,11 @@
-<Project Sdk="Godot.NET.Sdk/4.4.1">
+<Project Sdk="Godot.NET.Sdk/4.5.1">
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
     <EnableDynamicLoading>true</EnableDynamicLoading>
     <RootNamespace>JunctionalAdventureAuthoringPlatform</RootNamespace>
   </PropertyGroup>
   <ItemGroup>
+    <PackageReference Include="Microsoft.Data.Sqlite" Version="9.0.10" />
     <PackageReference Include="QuickEPUB" Version="1.2.0" />
   </ItemGroup>
 </Project>
