@@ -1,9 +1,9 @@
 [gd_scene load_steps=3 format=3 uid="uid://c7mxal3ekqad8"]
 
-[ext_resource type="Script" uid="uid://cbvhge0j3aiwi" path="res://scripts/highlight_text_node.gd" id="1_b07gw"]
+[ext_resource type="Script" uid="uid://8nlst4m423s" path="res://cs/HighlightTextNode.cs" id="1_b07gw"]
 [ext_resource type="PackedScene" uid="uid://bnfa3c6dm1fre" path="res://nodes/PopupContainer.tscn" id="2_b07gw"]
 
-[node name="HighlightTextNode" type="GraphNode" node_paths=PackedStringArray("popup_container", "close_button")]
+[node name="HighlightTextNode" type="GraphNode"]
 offset_right = 400.0
 offset_bottom = 200.0
 slot/0/left_enabled = false
@@ -25,9 +25,6 @@ slot/1/right_color = Color(1, 1, 1, 1)
 slot/1/right_icon = null
 slot/1/draw_stylebox = true
 script = ExtResource("1_b07gw")
-popup_container = NodePath("PopupContainer")
-close_button = NodePath("HBoxContainer/CloseButton")
-graph_class_name = "HighlightTextNode"
 metadata/_custom_type_script = "uid://c0tt7qeudxgun"
 
 [node name="PopupContainer" parent="." instance=ExtResource("2_b07gw")]

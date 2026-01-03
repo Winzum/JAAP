@@ -19,13 +19,13 @@ func add_graph_node(data: Dictionary = {}):
 			new_node = context_node.instantiate()
 		if data["type"] == "HighlightTextNode":
 			new_node = highlight_text_node.instantiate()
-	
-	if "name" in data:
-		new_node.name = data["name"]
-	
-	if "title" in data:
-		new_node.title = data["title"]
-	
+	#
+	#if "name" in data:
+		#new_node.name = data["name"]
+	#
+	#if "title" in data:
+		#new_node.title = data["title"]
+	#
 	if "position" in data:
 		var pos = data["position"]
 		if typeof(pos) == TYPE_VECTOR2:
@@ -34,22 +34,23 @@ func add_graph_node(data: Dictionary = {}):
 			new_node.position_offset = str_to_var("Vector2" + pos)
 	else:
 		new_node.position_offset = (scroll_offset / zoom + get_size() / (2 * zoom)) - new_node.size / 2
-	
-	if "size" in data:
-		new_node.size = str_to_var("Vector2" + data["size"])
-		
-	if "textedits" in data:
-		var text_edits = data["textedits"]
-		if data["type"] == "HighlightTextNode":
-			new_node.initialize_slot(text_edits["0"], data["marked_words"])
-		else:
-			new_node.initialize_slot(text_edits["0"])
-		for key in text_edits:
-			if key != "0":
-				new_node.add_known_field(int(key), "TextEdit_" + key, text_edits[key])
-	else:
-		new_node.initialize_slot()
-	
+	#
+	#if "size" in data:
+		#new_node.size = str_to_var("Vector2" + data["size"])
+		#
+	#if "textedits" in data:
+		#var text_edits = data["textedits"]
+		#if data["type"] == "HighlightTextNode":
+			#new_node.initialize_slot(text_edits["0"], data["marked_words"])
+		#else:
+			#new_node.initialize_slot(text_edits["0"])
+		#for key in text_edits:
+			#if key != "0":
+				#new_node.add_known_field(int(key), "TextEdit_" + key, text_edits[key])
+	#else:
+		#new_node.initialize_slot()
+	if data["type"] == "HighlightTextNode":
+		new_node.Initialize(0, new_node.position_offset.x, new_node.position_offset.y, "test")
 	add_child(new_node)
 
 #gets connections in a formatted format

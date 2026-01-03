@@ -14,6 +14,7 @@ public class DatabaseManager
 	    ExecuteNonQuery("""
 	                    CREATE TABLE IF NOT EXISTS "block" (
 	                    	"id"	INTEGER NOT NULL UNIQUE,
+	                    	"blocktype_id"	INTEGER NOT NULL,
 	                    	"canvas_id"	INTEGER NOT NULL,
 	                    	"text"	TEXT,
 	                    	"pos_x"	REAL,
@@ -21,7 +22,13 @@ public class DatabaseManager
 	                    	"created_at"	TEXT NOT NULL DEFAULT current_timestamp,
 	                    	"updated_at"	TEXT NOT NULL DEFAULT current_timestamp,
 	                    	PRIMARY KEY("id"),
+	                    	CONSTRAINT "block_blocktype" FOREIGN KEY("blocktype_id") REFERENCES "blocktype"("id") on delete restrict on update cascade,
 	                    	CONSTRAINT "block_canvas" FOREIGN KEY("canvas_id") REFERENCES "canvas"("id") on delete cascade on update cascade
+	                    );
+	                    CREATE TABLE IF NOT EXISTS "blocktype" (
+	                    	"id"	INTEGER NOT NULL UNIQUE,
+	                    	"type"	TEXT NOT NULL UNIQUE,
+	                    	PRIMARY KEY("id")
 	                    );
 	                    CREATE TABLE IF NOT EXISTS "canvas" (
 	                    	"id"	INTEGER NOT NULL UNIQUE,
@@ -42,7 +49,9 @@ public class DatabaseManager
 	                    	CONSTRAINT "link_block" FOREIGN KEY("block_id") REFERENCES "block"("id") on update cascade on delete cascade,
 	                    	CONSTRAINT "link_target" FOREIGN KEY("target_id") REFERENCES "block"("id") on update cascade on delete set null
 	                    );
-	                    INSERT INTO "main"."canvas" DEFAULT VALUES;
+	                    INSERT INTO "blocktype" ("id","type") VALUES (1,'highlight');
+	                    INSERT INTO "blocktype" ("id","type") VALUES (2,'boolean');
+	                    );
 	                    """);
     }
     
