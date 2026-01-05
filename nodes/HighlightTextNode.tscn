@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://8nlst4m423s" path="res://cs/HighlightTextNode.cs" id="1_b07gw"]
 [ext_resource type="PackedScene" uid="uid://bnfa3c6dm1fre" path="res://nodes/PopupContainer.tscn" id="2_b07gw"]
 
-[node name="HighlightTextNode" type="GraphNode"]
+[node name="HighlightTextNode" type="GraphNode" node_paths=PackedStringArray("CloseButton")]
 offset_right = 400.0
 offset_bottom = 200.0
 slot/0/left_enabled = false
@@ -25,6 +25,7 @@ slot/1/right_color = Color(1, 1, 1, 1)
 slot/1/right_icon = null
 slot/1/draw_stylebox = true
 script = ExtResource("1_b07gw")
+CloseButton = NodePath("HBoxContainer/CloseButton")
 metadata/_custom_type_script = "uid://c0tt7qeudxgun"
 
 [node name="PopupContainer" parent="." instance=ExtResource("2_b07gw")]
