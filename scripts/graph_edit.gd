@@ -50,7 +50,7 @@ func add_graph_node(data: Dictionary = {}):
 	#else:
 		#new_node.initialize_slot()
 	if data["type"] == "HighlightTextNode":
-		new_node.Initialize(0, new_node.position_offset.x, new_node.position_offset.y, "test")
+		new_node.Initialize(0, new_node.position_offset.x, new_node.position_offset.y, "")
 	add_child(new_node)
 
 #gets connections in a formatted format
