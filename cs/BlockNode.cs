@@ -3,12 +3,15 @@ using Godot;
 public abstract partial class BlockNode : GraphNode
 {
 	[Export] public Button CloseButton { get; set; }
+	[Export] public Popup ActionPopup { get; set; }
 
 	private int BlockId { get; set; }
 	protected float PosX { get; set; }
 	protected float PosY { get; set; }
 	protected string Text { get; set; }
-
+	
+	private GraphEdit GraphEdit { get; set; }
+	
 	protected void Initialize(int canvas_id, int blocktype_id, float pos_x, float pos_y, string text = "")
 	{
 		var query = $"""
@@ -54,12 +57,31 @@ public abstract partial class BlockNode : GraphNode
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
+		GraphEdit = GetParent<GraphEdit>();
 		if (CloseButton != null)
 		{
 			CloseButton.Pressed += _DeleteAndFree;
 		}
+		
+		if (ActionPopup != null)
+		{
+			GuiInput += _OnGuiInput;
+		}
 	}
-
+	
+	private void _OnGuiInput(InputEvent @event)
+	{
+		// On right click
+		if (@event is InputEventMouseButton mouseEvent && mouseEvent.Pressed && mouseEvent.ButtonIndex == MouseButton.Right)
+		{
+			var popupLocation = GetGlobalTransform().Origin + (mouseEvent.Position * GraphEdit.Zoom);
+			ActionPopup.Position = new Vector2I((int)popupLocation.X, (int)popupLocation.Y);
+			ActionPopup.Show();
+			GD.Print($"Showing popup at: {ActionPopup.Position}");
+			AcceptEvent();
+		}
+	}
+	
 	private void _DeleteAndFree()
 	{
 		var query =	 $"""

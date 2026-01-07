@@ -1,11 +1,6 @@
 [gd_scene format=3 uid="uid://bnfa3c6dm1fre"]
 
-[node name="PopupContainer" type="Popup"]
-auto_translate_mode = 1
-oversampling_override = 1.0
-visible = true
-
-[node name="PopupMenu" type="PopupMenu" parent="."]
+[node name="PopupMenu" type="PopupMenu"]
 auto_translate_mode = 1
 oversampling_override = 1.0
 item_count = 2
