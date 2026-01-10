@@ -16,6 +16,7 @@ public class DatabaseManager
 	                    	"id"	INTEGER NOT NULL UNIQUE,
 	                    	"blocktype_id"	INTEGER NOT NULL,
 	                    	"canvas_id"	INTEGER NOT NULL,
+	                    	"title"	TEXT,
 	                    	"text"	TEXT,
 	                    	"pos_x"	REAL,
 	                    	"pos_y"	REAL,

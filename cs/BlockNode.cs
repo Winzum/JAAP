@@ -3,7 +3,7 @@ using Godot;
 public abstract partial class BlockNode : GraphNode
 {
 	[Export] public Button CloseButton { get; set; }
-	[Export] public Popup ActionPopup { get; set; }
+	[Export] public ActionPopupContainer ActionPopup { get; set; }
 
 	private int BlockId { get; set; }
 	protected float PosX { get; set; }
@@ -33,6 +33,7 @@ public abstract partial class BlockNode : GraphNode
 				PosX = pos_x;
 				PosY = pos_y;
 				Text = text;
+				GD.Print(PositionOffset);
 			}
 		}
 	}
@@ -44,9 +45,11 @@ public abstract partial class BlockNode : GraphNode
 		             set pos_x = {PosX},
 		                 pos_y = {PosY},
 		                 text = '{Text}',
+		                 title = '{Title}',
 		                 updated_at = current_timestamp
 		             where id = {BlockId};
 		             """;
+		GD.Print(query);
 		var result = DatabaseManager.ExecuteNonQuery(query);
 		if (result > 0)
 		{
@@ -66,6 +69,12 @@ public abstract partial class BlockNode : GraphNode
 		if (ActionPopup != null)
 		{
 			GuiInput += _OnGuiInput;
+			ActionPopup.PopupClose += _DeleteAndFree;
+			ActionPopup.SubmitName += (string name) =>
+			{
+				Title = name;
+				Update();
+			};
 		}
 	}
 	

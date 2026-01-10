@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://c7mxal3ekqad8"]
 
 [ext_resource type="Script" uid="uid://8nlst4m423s" path="res://cs/HighlightTextNode.cs" id="1_b07gw"]
-[ext_resource type="PackedScene" uid="uid://bnfa3c6dm1fre" path="res://nodes/PopupContainer.tscn" id="2_b07gw"]
+[ext_resource type="PackedScene" uid="uid://bnfa3c6dm1fre" path="res://nodes/ActionPopupContainer.tscn" id="2_b07gw"]
 
 [node name="HighlightTextNode" type="GraphNode" node_paths=PackedStringArray("CloseButton", "ActionPopup")]
 offset_right = 400.0
@@ -30,6 +30,7 @@ ActionPopup = NodePath("PopupContainer")
 metadata/_custom_type_script = "uid://c0tt7qeudxgun"
 
 [node name="PopupContainer" parent="." instance=ExtResource("2_b07gw")]
+visible = false
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 

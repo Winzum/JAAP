@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://njqcn2v2ooe5"]
 
 [ext_resource type="Script" uid="uid://cu1e0ii8hf8rn" path="res://scripts/text_graph_node.gd" id="1_nf2nf"]
-[ext_resource type="PackedScene" uid="uid://bnfa3c6dm1fre" path="res://nodes/PopupContainer.tscn" id="2_3qy60"]
+[ext_resource type="PackedScene" uid="uid://bnfa3c6dm1fre" path="res://nodes/ActionPopupContainer.tscn" id="2_3qy60"]
 
 [node name="TextGraphNode" type="GraphNode" node_paths=PackedStringArray("popup_container", "close_button")]
 offset_right = 400.0

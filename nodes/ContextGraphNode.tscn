@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://cm36mr80kjrfk"]
 
 [ext_resource type="Script" uid="uid://c3wh38tja47y8" path="res://scripts/context_graph_node.gd" id="1_q5np2"]
-[ext_resource type="PackedScene" uid="uid://bnfa3c6dm1fre" path="res://nodes/PopupContainer.tscn" id="2_q5np2"]
+[ext_resource type="PackedScene" uid="uid://bnfa3c6dm1fre" path="res://nodes/ActionPopupContainer.tscn" id="2_q5np2"]
 
 [node name="ContextGraphNode" type="GraphNode" node_paths=PackedStringArray("popup_container", "close_button")]
 offset_right = 300.0
@@ -32,7 +32,6 @@ graph_class_name = "ContextGraphNode"
 metadata/_custom_type_script = "uid://c0tt7qeudxgun"
 
 [node name="PopupContainer" parent="." instance=ExtResource("2_q5np2")]
-visible = false
 
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
 layout_mode = 2
