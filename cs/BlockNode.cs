@@ -6,18 +6,17 @@ public abstract partial class BlockNode : GraphNode
 	[Export] public ActionPopupContainer ActionPopup { get; set; }
 
 	private int BlockId { get; set; }
-	protected float PosX { get; set; }
-	protected float PosY { get; set; }
 	protected string Text { get; set; }
 	
 	private GraphEdit GraphEdit { get; set; }
 	
-	protected void Initialize(int canvas_id, int blocktype_id, float pos_x, float pos_y, string text = "")
+	protected void Initialize(int canvas_id, int blocktype_id, Vector2 position, string text = "")
 	{
 		var query = $"""
-		             insert into "block" ("canvas_id", "blocktype_id", "pos_x", "pos_y", "text")
-		             values ({canvas_id}, {blocktype_id}, {pos_x}, {pos_y}, '{text}');
+		             insert into "block" ("canvas_id", "blocktype_id", "position", "text")
+		             values ({canvas_id}, {blocktype_id}, '{position}', '{text}');
 		             """;
+		GD.Print(query);
 		var result = DatabaseManager.ExecuteNonQuery(query);
 		if (result > 0)
 		{
@@ -30,10 +29,7 @@ public abstract partial class BlockNode : GraphNode
 			if (newId != null && int.TryParse(newId.ToString(), out int id))
 			{
 				BlockId = id;
-				PosX = pos_x;
-				PosY = pos_y;
 				Text = text;
-				GD.Print(PositionOffset);
 			}
 		}
 	}
@@ -42,8 +38,7 @@ public abstract partial class BlockNode : GraphNode
 	{
 		var query = $"""
 		             update "block"
-		             set pos_x = {PosX},
-		                 pos_y = {PosY},
+		             set position = '{PositionOffset}',
 		                 text = '{Text}',
 		                 title = '{Title}',
 		                 updated_at = current_timestamp

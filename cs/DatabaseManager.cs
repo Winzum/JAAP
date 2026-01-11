@@ -18,8 +18,6 @@ public class DatabaseManager
 	                    	"canvas_id"	INTEGER NOT NULL,
 	                    	"title"	TEXT,
 	                    	"text"	TEXT,
-	                    	"pos_x"	REAL,
-	                    	"pos_y"	REAL,
 	                    	"created_at"	TEXT NOT NULL DEFAULT current_timestamp,
 	                    	"updated_at"	TEXT NOT NULL DEFAULT current_timestamp,
 	                    	PRIMARY KEY("id"),

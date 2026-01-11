@@ -1,0 +1,29 @@
+[gd_scene load_steps=2 format=3 uid="uid://bnfa3c6dm1fre"]
+
+[ext_resource type="Script" uid="uid://daslkrbrwe65" path="res://cs/ActionPopupContainer.cs" id="1_ft3ic"]
+
+[node name="PopupMenu" type="PopupMenu" node_paths=PackedStringArray("PopupRename")]
+auto_translate_mode = 1
+oversampling_override = 1.0
+visible = true
+item_count = 2
+item_0/text = "Rename"
+item_0/id = 0
+item_1/text = "Close"
+item_1/id = 1
+script = ExtResource("1_ft3ic")
+PopupRename = NodePath("PopupRename")
+
+[node name="PopupRename" type="PopupPanel" parent="."]
+auto_translate_mode = 1
+oversampling_override = 1.0
+size = Vector2i(200, 40)
+
+[node name="LineEdit" type="LineEdit" parent="PopupRename"]
+offset_left = 4.0
+offset_top = 4.0
+offset_right = 196.0
+offset_bottom = 36.0
+placeholder_text = "name"
+
+[connection signal="text_submitted" from="PopupRename/LineEdit" to="." method="OnNameSubmitted"]

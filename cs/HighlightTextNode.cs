@@ -25,9 +25,9 @@ public partial class HighlightTextNode : BlockNode
 		panelContainer.Hide();
 	}
 
-	public void Initialize(int canvas_id, float pos_x, float pos_y, string text = "")
+	public void Initialize(int canvas_id, Vector2 position, string text = "")
 	{
-		base.Initialize(canvas_id, blocktype_id: 1, pos_x, pos_y, text);
+		base.Initialize(canvas_id, blocktype_id: 1, position, text);
 	}
 	
 	public override void _Ready()
