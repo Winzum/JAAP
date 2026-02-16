@@ -10,11 +10,11 @@ public abstract partial class BlockNode : GraphNode
 	
 	private GraphEdit GraphEdit { get; set; }
 	
-	protected void Initialize(int canvas_id, int blocktype_id, Vector2 position, string text = "")
+	protected void Initialize(int canvasId, int blocktypeId, Vector2 position, string text = "")
 	{
 		var query = $"""
 		             insert into "block" ("canvas_id", "blocktype_id", "position", "text")
-		             values ({canvas_id}, {blocktype_id}, '{position}', '{text}');
+		             values ({canvasId}, {blocktypeId}, '{position}', '{text}');
 		             """;
 		GD.Print(query);
 		var result = DatabaseManager.ExecuteNonQuery(query);
@@ -56,6 +56,9 @@ public abstract partial class BlockNode : GraphNode
 	public override void _Ready()
 	{
 		GraphEdit = GetParent<GraphEdit>();
+		
+		PositionOffsetChanged += _OnPositionOffsetChanged;
+		
 		if (CloseButton != null)
 		{
 			CloseButton.Pressed += _DeleteAndFree;
@@ -71,6 +74,11 @@ public abstract partial class BlockNode : GraphNode
 				Update();
 			};
 		}
+	}
+	
+	private void _OnPositionOffsetChanged()
+	{
+		Update();
 	}
 	
 	private void _OnGuiInput(InputEvent @event)
@@ -92,6 +100,7 @@ public abstract partial class BlockNode : GraphNode
 		             delete from "block"
 		             where id = {BlockId};
 		             """;
+		GD.Print(query);
 		var result = DatabaseManager.ExecuteNonQuery(query);
 		if (result > 0)
 		{
